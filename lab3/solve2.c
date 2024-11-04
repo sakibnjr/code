@@ -27,7 +27,6 @@ int main() {
     printf("Enter input string:\n");
     fgets(str, sizeof(str), stdin);
 
-    
     str[strcspn(str, "\n")] = '\0';
 
     count_vowels_consonants_digits(str, &vowels, &consonants, &digits);

@@ -2,14 +2,24 @@
 #include <string.h>
 
 int matches_a_star_b(const char *str) {
-    int i = 0;
-    while (str[i] == 'a') {
-        i++;
+    int len = strlen(str);  // Get the length of the string
+
+    if (len < 1) {
+        return 0;  // Reject if the string is empty
     }
-    if (str[i] == 'b' && str[i + 1] == '\0') {
-        return 1;
+
+    if (str[len - 1] != 'b') {
+        return 0;  // Reject if the last character is not 'b'
     }
-    return 0;
+
+    // Check that all preceding characters are 'a'
+    for (int i = 0; i < len - 1; i++) {
+        if (str[i] != 'a') {
+            return 0;  // Reject if any character before the last 'b' is not 'a'
+        }
+    }
+
+    return 1;  // Accept if the pattern matches a*b
 }
 
 int main() {
@@ -24,5 +34,6 @@ int main() {
     } else {
         printf("Output: Rejected\n");
     }
+
     return 0;
 }

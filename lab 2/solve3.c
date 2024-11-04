@@ -1,46 +1,49 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
-bool match_a_star_b(const char *str) {
-    int i = 0;
-    while (str[i] == 'a') {
-        i++;
+int matches_a_star_b(const char *str) {
+    int len = strlen(str);  // Get the length of the string
+
+    if (len < 1) {
+        return 0;  // Reject if the string is empty
     }
 
-    if (str[i] == 'b' && str[i + 1] == '\0') {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-int main() {
-    FILE *file = fopen("input.txt", "r");
-    if (file == NULL) {
-        printf("Error opening file.\n");
-        return 1;
+    if (str[len - 1] != 'b') {
+        return 0;  // Reject if the last character is not 'b'
     }
 
-    char str[100];
-    while (fgets(str, sizeof(str), file) != NULL) {
-   
-        str[strcspn(str, "\n")] = '\0';
-
-        char *start = str;
-        while (*start == ' ') start++;  
-        char *end = start + strlen(start) - 1;
-        while (end > start && *end == ' ') end--; 
-        *(end + 1) = '\0';
-
-        // Check if the trimmed string matches a*b pattern
-        if (match_a_star_b(start)) {
-            printf("Accepted\n");
-        } else {
-            printf("Rejected\n");
+    // Check that all preceding characters are 'a'
+    for (int i = 0; i < len - 1; i++) {
+        if (str[i] != 'a') {
+            return 0;  // Reject if any character before the last 'b' is not 'a'
         }
     }
 
-    fclose(file);
+    return 1;  // Accept if the pattern matches a*b
+}
+
+int main() {
+    FILE *file = fopen("input.txt", "r");  // Open the file for reading
+    if (file == NULL) {
+        printf("Error opening file.\n");
+        return 1;  // Exit if the file cannot be opened
+    }
+
+    char input[100];
+    
+    // Read each line from the file
+    while (fgets(input, sizeof(input), file) != NULL) {
+        // Remove the newline character if it exists
+        input[strcspn(input, "\n")] = '\0';
+
+        printf("Input: %s\n", input);
+        if (matches_a_star_b(input)) {
+            printf("Output: Accepted\n");
+        } else {
+            printf("Output: Rejected\n");
+        }
+    }
+
+    fclose(file);  // Close the file
     return 0;
 }

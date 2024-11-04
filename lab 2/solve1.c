@@ -2,50 +2,20 @@
 #include <string.h>
 
 int matches_a_plus(const char *str) {
-    if (str == NULL || *str == '\0') {
-        return 0;
-    }
-#include <stdio.h>
-#include <string.h>
+    int len = strlen(str);  // Get the length of the string
 
-int matches_a_plus(const char *str) {
-    if (str == NULL || *str == '\0') {
-        return 0;
+    if (len < 1) {
+        return 0;  // Reject if the string is empty
     }
 
-    while (*str) {
-        if (*str != 'a') {
-            return 0;
+    // Check that every character in the string is 'a'
+    for (int i = 0; i < len; i++) {
+        if (str[i] != 'a') {
+            return 0;  // Reject if any character is not 'a'
         }
-        str++;
-    }
-    
-    return 1;
-}
-
-int main() {
-    char input[100];
-
-    printf("Enter the input string: ");
-    scanf("%s", input);
-
-    printf("Input: %s\n", input);
-    if (matches_a_plus(input)) {
-        printf("Output: Accepted\n");
-    } else {
-        printf("Output: Rejected\n");
     }
 
-    return 0;
-}
-    while (*str) {
-        if (*str != 'a') {
-            return 0;
-        }
-        str++;
-    }
-    
-    return 1;
+    return 1;  // Accept if the pattern matches a+
 }
 
 int main() {
